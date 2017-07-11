@@ -1,6 +1,6 @@
 import React, { Component,PropTypes } from 'react'
 
-export const connect = (mapStateToProps) => (WrappedComponent) => {
+export const connect = (mapStateToProps,mapDispatchToProps) => (WrappedComponent) => {
     class Connect extends Component{
         static contextTypes ={
             store: PropTypes.object
@@ -19,10 +19,12 @@ export const connect = (mapStateToProps) => (WrappedComponent) => {
 
         _updateProps(){
             const {store} = this.context
-            let stateProps = mapStateToProps(store.getState(),this.props)
+            let stateProps = mapStateToProps ? mapStateToProps(store.getState(),this.props) : {}// 防止 mapStateToProps 没有传入
+            let dispatchProps  = mapDispatchToProps ? mapDispatchToProps(store.dispatch,this.props) : {}// 防止 mapDispatchToProps 没有传入
             this.setState({
                 allProps: {
                     ...stateProps,
+                    ...dispatchProps,
                     ...this.props
                 }
             })

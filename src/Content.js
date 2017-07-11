@@ -7,7 +7,7 @@ class Content extends Component{
         store: PropTypes.object
     }*/
     static contextTypes = {
-        store: PropTypes.string
+        themeColor: PropTypes.string
     }
     /*constructor(){
         super()
