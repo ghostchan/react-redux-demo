@@ -21,6 +21,7 @@ export const connect = (mapStateToProps,mapDispatchToProps) => (WrappedComponent
             const {store} = this.context
             let stateProps = mapStateToProps ? mapStateToProps(store.getState(),this.props) : {}// 防止 mapStateToProps 没有传入
             let dispatchProps  = mapDispatchToProps ? mapDispatchToProps(store.dispatch,this.props) : {}// 防止 mapDispatchToProps 没有传入
+            // console.log(dispatchProps)
             this.setState({
                 allProps: {
                     ...stateProps,
@@ -39,4 +40,28 @@ export const connect = (mapStateToProps,mapDispatchToProps) => (WrappedComponent
         }
     }
     return Connect
+}
+
+export class Provider extends Component{
+    static propTypes = {
+        store:PropTypes.object,
+        children: PropTypes.any
+    }
+
+    static childContextTypes = {
+        store: PropTypes.object
+    }
+
+    getChildContext(){
+        return {
+            store: this.props.store
+        }
+    }
+
+    render(){
+        return (
+            <div>{this.props.children}</div>
+        )
+    }
+
 }
